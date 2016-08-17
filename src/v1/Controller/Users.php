@@ -3,31 +3,56 @@ namespace V1\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use V1\Entity\UserEntity;
 
 
 class Users {
 
   public function get(Request $request, Application $app) {
-    return $app->json(array('m'=>'/users GET'.$request->get('message')));
+
+    $users = $app['repository.user']->findAll(0);
+
+    return $app->json($users);
   }
 
   public function getUser(Request $request, Application $app,  $uid) {
-
-    return $app->json(array('m'=>'/users GET'.$uid));
+    $user = $app['repository.user']->find($uid);
+    return $app->json($user);
   }
 
   public function post(Request $request, Application $app) {
-    $post = array(
-      'METHOD' => 'post',
-      'title' => $request->request->get('param1'),
-      'body'  => $request->request->get('param2'),
+
+    $user = new UserEntity();
+    $user->setName($request->request->get('name'));
+
+    $app['repository.user']->save($user);
+
+    $uData = array(
+      'id' => $user->getId(),
+      'name' => $user->getName(),
+      'created_at' => $user->getCreatedAt(),
     );
 
-    return $app->json($post, 201);
+    return $app->json($uData, 201);
   }
 
-  public function update(Request $request, Application $app) {
-    return $app->json(array('m'=>'/users PUT/PATCH'));
+  public function update(Request $request, Application $app, $uid) {
+
+    $user = new UserEntity();
+    $user->setName($request->request->get('name'));
+    $user->setId($uid);
+
+    $app['repository.user']->save($user);
+
+
+    $uData = array(
+      'id' => $user->getId(),
+      'name' => $user->getName(),
+      'created_at' => $user->getCreatedAt(),
+    );
+
+
+    return $app->json($uData, 201);
   }
 
   public function delete(Request $request, Application $app) {

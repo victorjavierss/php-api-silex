@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-
 use Silex\Provider\DoctrineServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +12,7 @@ define ('RESPONSE_CODE_OK', 200);
 
 date_default_timezone_set('America/Mexico_City');
 
-// init Silex app
+
 $app = new Silex\Application();
 
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/settings.yml'));
@@ -23,6 +22,7 @@ $app['debug'] = true;
 $app->register(new DoctrineServiceProvider(), array(
   'db.options' => $app['config']['database']
 ));
+
 
 // Parsing JSON body request
 $app->before(function (Request $request) {
@@ -36,6 +36,7 @@ $app->before(function (Request $request) {
 /*$app->after(function (Request $request, Response $response) {
   //$response->headers->set('Access-Control-Allow-Origin', '*');
 }); */
+
 
 //Routing Set Up
 $app->mount('/v1', new V1\ControllerProvider\V1ControllerProvider());

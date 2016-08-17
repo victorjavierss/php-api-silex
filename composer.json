@@ -1,7 +1,7 @@
 {
     "require": {
         "silex/silex": "*",
-        "symfony/var-dumper": "^3.1",
+        "doctrine/dbal": "v2.5.4",
         "deralex/yaml-config-service-provider": "1.0.x-dev"
     },
     "autoload": {
