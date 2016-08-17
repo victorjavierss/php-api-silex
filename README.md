@@ -3,7 +3,21 @@ Simple PHP API using Silex Framework
 
 **Requirements**
 
-PHP 5.3.x
+* PHP 5.3.x
+* Composer
+
+**Intallation**
+
+```sh
+composer intall
+```
+
+**Running**
+
+```sh
+ php -S localhost:8000
+```
+**NOTE:**  Only use the Built-In Web Server for development
 
 ## Usage
  - [User Resources](#users-resources-operations)
