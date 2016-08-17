@@ -1,0 +1,12 @@
+{
+    "require": {
+        "silex/silex": "*",
+        "symfony/var-dumper": "^3.1",
+        "deralex/yaml-config-service-provider": "1.0.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "V1\\": "src/v1"
+        }
+    }
+}
