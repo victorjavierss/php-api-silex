@@ -8,7 +8,7 @@ PHP 5.3.x
 ## Usage
  - [User Resources](#users-resources-operations)
  - [Users Logs](#users-log-resources-operations)
- - [Log Resources](#log-resources-operations)
+ - [Log Resources](#logs-resources-operations)
  
 
 ### Users Resources Operations
