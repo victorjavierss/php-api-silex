@@ -1,8 +1,17 @@
 # php-api-silex
 Simple PHP API using Silex Framework
 
+**Requirements**
 
-## Users Resources Operations
+PHP 5.3.x
+
+## Usage
+ - [User Resources](#users-resources-operations)
+ - [Users Logs](#users-log-resources-operations)
+ - [Log Resources](#log-resources-operations)
+ 
+
+### Users Resources Operations
 |URL|HTTP Method|Operation| 
 |----------|-------------|------|
 | /v1/users | GET | Returns an array of users |
@@ -13,7 +22,7 @@ Simple PHP API using Silex Framework
 |/v1/users/`:uid` | DELETE | Deletes the user with id of `:uid`
 
 
-## Users Log Resources Operations
+### Users Log Resources Operations
 |URL|HTTP Method|Operation| 
 |----------|-------------|------|
 |/v1/users/`:uid`/logs | GET | Returns an array of the logs of the user
@@ -22,7 +31,7 @@ Simple PHP API using Silex Framework
 |/v1/users/`:uid`/logs/`:lid `| DELETE | Removes a log entry `:lid` to the user `:uid`
 
 
-## Logs Resources Operations
+### Logs Resources Operations
 |URL|HTTP Method|Operation| 
 |----------|-------------|------|
 |/v1/logs/ | GET | Returns an list of logs
