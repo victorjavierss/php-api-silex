@@ -6,7 +6,6 @@ use Silex\Provider\DoctrineServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\SerializerServiceProvider;
-use \Negotiation\Negotiator;
 
 use V1\ControllerProvider;
 
@@ -20,8 +19,6 @@ $app = new Silex\Application();
 
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/settings.yml'));
 $app->register(new SerializerServiceProvider());
-
-$app['negotiator'] = new Negotiator();
 
 
 $app['debug'] = true;
@@ -53,6 +50,19 @@ $app->view(function (array $controllerResult, Request $request) use ($app) {
 //Enabling CORS
 $app->after(function (Request $request, Response $response) {
   $response->headers->set('Access-Control-Allow-Origin', '*');
+});
+
+
+$app->error(function (\Exception $e, Request $request, $code) {
+  switch ($code) {
+    case 404:
+      $message = 'The requested page could not be found.';
+      break;
+    default:
+      $message = 'We are sorry, but something went terribly wrong.';
+  }
+
+  return new Response($message);
 });
 
 
