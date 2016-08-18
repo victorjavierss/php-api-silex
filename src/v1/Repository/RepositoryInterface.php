@@ -59,5 +59,5 @@ interface RepositoryInterface {
    *
    * @return array A collection of entity objects.
    */
-  public function findAll($limit, $offset = 0, $orderBy = array(), $filterBy = array());
+  public function findAll($limit, $offset = 0, $orderBy = '', $filterBy = array());
 }

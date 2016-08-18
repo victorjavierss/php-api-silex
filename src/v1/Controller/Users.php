@@ -16,8 +16,8 @@ class Users {
   }
 
   public function getUser(Request $request, Application $app,  $uid) {
-    $user = $app['repository.user']->find($uid);
-    return $app->json($user);
+
+    return $app['repository.user']->find($uid);
   }
 
   public function post(Request $request, Application $app) {
@@ -67,7 +67,10 @@ class Users {
     return $app->json(array('m'=>'/users/logs POST'));
   }
 
-  public function getLog(Request $request, Application $app) {
+  public function getLog(Request $request, Application $app, $uid, $lid) {
+
+
+
     return $app->json(array('m'=>'/users/logs/{lid} GET'));
   }
 

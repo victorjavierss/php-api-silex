@@ -4,6 +4,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Silex\Provider\DoctrineServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Silex\Provider\SerializerServiceProvider;
+use \Negotiation\Negotiator;
 
 use V1\ControllerProvider;
 
@@ -16,13 +19,16 @@ date_default_timezone_set('America/Mexico_City');
 $app = new Silex\Application();
 
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/settings.yml'));
+$app->register(new SerializerServiceProvider());
+
+$app['negotiator'] = new Negotiator();
+
 
 $app['debug'] = true;
 
 $app->register(new DoctrineServiceProvider(), array(
   'db.options' => $app['config']['database']
 ));
-
 
 // Parsing JSON body request
 $app->before(function (Request $request) {
@@ -32,14 +38,27 @@ $app->before(function (Request $request) {
   }
 });
 
+$app->view(function (array $controllerResult, Request $request) use ($app) {
+  $acceptHeader = $request->headers->get('Accept');
+  //$bestFormat = $app['negotiator']->getBest($acceptHeader, array('json', 'xml'));
+
+  $format = 'json';
+
+    return new Response($app['serializer']->serialize($controllerResult, $format), 200, array(
+      "Content-Type" => $request->getMimeType($format)
+    ));
+});
+
+
 //Enabling CORS
-/*$app->after(function (Request $request, Response $response) {
-  //$response->headers->set('Access-Control-Allow-Origin', '*');
-}); */
+$app->after(function (Request $request, Response $response) {
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+});
 
 
 //Routing Set Up
 $app->mount('/v1', new V1\ControllerProvider\V1ControllerProvider());
+
 
 
 $app->run();

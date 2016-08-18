@@ -34,6 +34,8 @@ class V1ControllerProvider implements ControllerProviderInterface {
     $factory->delete('/users/{uid}/logs/{lid}', 'V1\Controller\Users::deleteLog');
 
 
+
+
     return $factory;
   }
 

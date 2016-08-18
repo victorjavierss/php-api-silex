@@ -8,6 +8,8 @@
 
 namespace V1\Repository;
 
+use Doctrine\DBAL\Connection;
+
 
 abstract class RepositoryAbstract implements RepositoryInterface {
   protected $_db;
@@ -32,9 +34,15 @@ abstract class RepositoryAbstract implements RepositoryInterface {
     return  $this->_db->fetchAssoc($sql, array($id));
   }
 
-  public function findAll($limit, $offset = 0, $orderBy = array(), $filterBy = array()) {
+  public function findAll($limit, $offset = 0, $orderBy = '', $filterBy = array()) {
 
     $sql = "SELECT * FROM {$this->_table}";
+
+
+    if ($orderBy) {
+      $fieldsOrderBy = str_replace(':',' ', $orderBy);
+      $sql .= ' ODER BY ' .$fieldsOrderBy;
+    }
 
     return  $this->_db->fetchAll($sql);
   }
